@@ -1,15 +1,14 @@
-all: main
 
-CXX = clang++
-override CXXFLAGS += -g -Wno-everything
+# Starter Makefile
+# add .cpp and .h files as specified in each task. 
 
-SRCS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.cpp' -print | sed -e 's/ /\\ /g')
+main: main.o reservoir.o
+	g++ -o main main.o reservoir.o
 
-main: $(SRCS)
-	$(CXX) $(CXXFLAGS) $(SRCS) -o "$@"
+main.o: main.cpp reservoir.h
+	g++ -c main.cpp
 
-main-debug: $(SRCS)
-	$(CXX) $(CXXFLAGS) -O0 $(SRCS) -o "$@"
-
+reservoir.o: reservoir.cpp reservoir.h
+	g++ -c reservoir.cpp
 clean:
-	rm -f main main-debug
+	rm -f main.o reservoir.o
